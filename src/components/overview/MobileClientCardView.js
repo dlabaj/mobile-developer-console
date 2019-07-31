@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Toolbar, Filter, CardGrid } from 'patternfly-react';
-import { EmptyState, EmptyStateBody, EmptyStateVariant, EmptyStateIcon, Title } from '@patternfly/react-core';
+import { Toolbar, Gallery, GalleryItem, ToolbarItem } from '@patternfly/react-core';
+import { EmptyState, EmptyStateBody, EmptyStateVariant, EmptyStateIcon, Title, PageSection } from '@patternfly/react-core';
 import { MobileAltIcon } from '@patternfly/react-icons';
 import DebounceInput from 'react-debounce-input';
 import './MobileClientCardView.css';
@@ -108,9 +108,13 @@ class MobileClientCardView extends Component {
     const { mobileClients } = this.props;
     const filteredClients = this.filterClients(mobileClients);
     return filteredClients.length ? (
-      <CardGrid matchHeight fluid>
-        <CardGrid.Row key={1}>{filteredClients}</CardGrid.Row>
-      </CardGrid>
+      <Gallery gutter="md">
+        {filteredClients.map((x, i) => (
+          <GalleryItem key={i}>
+            {x}
+          </GalleryItem>
+        ))}
+      </Gallery>
     ) : (
       <EmptyState>
         <EmptyStateIcon icon={MobileAltIcon} />
@@ -126,33 +130,31 @@ class MobileClientCardView extends Component {
     const { filter, currentValue } = this.state;
     return (
       <div className="overview">
-        <Toolbar>
-          <Filter>
-            <DebounceInput
-              minLength={1}
-              debounceTimeout={300}
-              type="text"
-              placeholder="Filter by Name"
-              className="toolbarFilter"
-              value={currentValue}
-              onChange={e => this.updateCurrentValue(e)}
-              onKeyPress={e => this.onValueKeyPress(e)}
-            />
-          </Filter>
-          <div className="form-group">
-            <CreateClient />
-          </div>
-          {filter && filter.length > 0 && (
-            <Toolbar.Results>
-              <Filter.ActiveLabel>Active Filters:</Filter.ActiveLabel>
-              <Filter.List>
-                <Filter.Item key="1" filterData={{ filter }} onRemove={e => this.removeFilter(e)}>
-                  {filter}
-                </Filter.Item>
-              </Filter.List>
-            </Toolbar.Results>
-          )}
-        </Toolbar>
+        <PageSection>
+          <Title headingLevel="h2" size="3xl">
+              Mobile Apps
+          </Title>
+          <br></br>
+          <Toolbar>
+            <ToolbarItem>
+              <DebounceInput
+                minLength={1}
+                debounceTimeout={300}
+                type="text"
+                placeholder="Filter by name"
+                className="toolbarFilter"
+                value={currentValue}
+                onChange={e => this.updateCurrentValue(e)}
+                onKeyPress={e => this.onValueKeyPress(e)}
+              />
+            </ToolbarItem>
+            <div className="form-group">
+              <CreateClient />
+            </div>
+            {filter && filter.length > 0 && (
+              mobileClients.filterClients)}
+          </Toolbar>
+        </PageSection>
         {mobileClients.length ? this.renderAppCards() : this.getEmptyState()}
       </div>
     );

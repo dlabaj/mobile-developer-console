@@ -113,7 +113,7 @@ class ClientEditBaseClass extends Component {
     return (
       <Fragment>
         <Button bsSize={this.props.createButtonSize} onClick={this.open}>
-          Create a mobile app
+          Create new mobile app
         </Button>
         {this.renderModal()}
       </Fragment>
