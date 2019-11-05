@@ -32,7 +32,21 @@ const getLogo = () => {
   if (window.OPENSHIFT_CONFIG && window.OPENSHIFT_CONFIG.logo) {
     return window.OPENSHIFT_CONFIG.logo;
   }
-  return '/img/aerogear_logo.svg';
+  return '/img/branding_logo.svg';
+};
+
+const getBackgroundImage = () => {
+  if (window.OPENSHIFT_CONFIG && window.OPENSHIFT_CONFIG.backgroundImg) {
+    return window.OPENSHIFT_CONFIG.backgroundImg;
+  }
+  return '';
+};
+
+const getBrandImage = () => {
+  if (window.OPENSHIFT_CONFIG && window.OPENSHIFT_CONFIG.brandImg) {
+    return window.OPENSHIFT_CONFIG.brandImg;
+  }
+  return '/img/brand.svg';
 };
 
 const getDocumentation = () => {
@@ -65,6 +79,8 @@ export {
   remove,
   OpenShiftWatchEvents,
   getUser,
+  getBackgroundImage,
+  getBrandImage,
   getFavIcon,
   getLogo,
   getDocumentation,
